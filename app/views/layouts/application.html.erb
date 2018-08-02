@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ウサギのふーの部屋</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="main_title">
+      <%= link_to image_tag("title.jpg", {:id => "blog_image", :alt => "ウサギのふーの部屋"}), root_path %>
+    </div>
+
+    <header>
+      <div id="header">
+        <li class="header_btn"><%= link_to "home", root_path %></li>
+        <% if @last %>
+        <li class="header_btn"><%= link_to "最新記事", "/articles/#{@last.id}" %></li>
+        <% end %>
+        <li class="header_btn"><%= link_to "画像一覧", "/pictures" %></li>
+        <% if @first %>
+        <li class="header_btn"><%= link_to "プロフィール", "/articles/#{@first.id}" %></li>
+        <% end %>
+      </div>
+    </header>
+
+    <%= yield %>
+  </body>
+</html>

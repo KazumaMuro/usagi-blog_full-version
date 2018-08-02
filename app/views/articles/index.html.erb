@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<div class="main">
+  <div class="side_bar">
+    <%= image_tag "profile.jpg",
+    :class => "profile_image", :alt => "ふーの写真",
+    :height => 250, :width => 250 %>
+    <div class="profile">
+      <h6>プロフィール</h6>
+      <p>ネザーランドドワーフのふー</p>
+      <p>0歳の◯◯子です</p>
+    </div>
+
+    <div class="new">
+      <h4>新着記事</h4>
+      <% @new_articles.each do |new_article| %>
+      <div class="new_content">
+        <div class="new_picture">
+          <%= image_tag new_article.picture.to_s, :size => "150x150" %>
+        </div>
+        <div class="new_title">
+          <%= link_to new_article.title, "/articles/#{new_article.id}" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="main_list">
+    <% @articles.each do |article| %>
+    <div id="content">
+      <div id="picture">
+        <%= image_tag article.picture.to_s, :size => "300x200" %>
+      </div>
+      <div id="title">
+        <%= link_to article.title, article %>
+        <p class = "time"><%= article.created_at.to_s %></p>
+      </div>
+    </div>
+
+    <% if @current_user %>
+      <%= link_to 'Edit', edit_article_path(article) %>
+      <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
+    <% end %>
+    <%= will_paginate @articles,  {:class => 'pagination', :previous_label => '前へ', :next_label => '次へ'} %>
+  </div>
+</div>
+<br>
+
+<% if @current_user %>
+  <%= link_to 'New Article', new_article_path %>
+  <%= link_to"ログアウト", "/logout", {method: :post} %>
+<% end %>
+
+<li class="login"><%= link_to "ログイン", "/login" %></li>
